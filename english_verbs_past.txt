@@ -779,4 +779,4 @@ wrote
 yawned
 yelled
 zipped
-zoomed.
+zoomed

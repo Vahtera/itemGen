@@ -6,7 +6,7 @@ using libAnnaC;
 
 string ProgramName = "itemGen";
 string ProgramVersion = "0.0.3";
-string[] ItemTypes = { "sword", "axe", "wand", "shield", "tome", "armor", "ring", "amulet" };
+string[] ItemTypes = { "sword", "axe", "wand", "shield", "tome", "armor", "ring", "amulet", "bracers", "boots", "sash", "dagger", "bow", "mace", "robe", "cloak" };
 string AdjFileName = "english_adjectives.txt";
 string VerbFileName = "english_verbs.txt";
 string PastVerbFileName = "english_verbs_past.txt";
