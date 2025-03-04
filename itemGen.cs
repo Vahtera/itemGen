@@ -41,11 +41,18 @@ string[] Nouns = [];
 string[] PastVerbs = [];
 string[] IngVerbs = [];
 
-try { Adjectives = File.ReadAllLines(AdjFileName); } catch (FileNotFoundException) { Console.WriteLine($"\nError: File {AdjFileName} does not exist. Ending Program.\n"); Environment.Exit(1); }
-try { Nouns = File.ReadAllLines(NounFileName); } catch (FileNotFoundException) { Console.WriteLine($"\nError: File {NounFileName} does not exist. Ending Program.\n"); Environment.Exit(1); }
-try { PastVerbs = File.ReadAllLines(PastVerbFileName); } catch (FileNotFoundException) { Console.WriteLine($"\nError: File {PastVerbFileName} does not exist. Ending Program.\n"); Environment.Exit(1); }
-try { IngVerbs = File.ReadAllLines(IngVerbFileName); } catch (FileNotFoundException) { Console.WriteLine($"\nError: File {IngVerbFileName} does not exist. Ending Program.\n"); Environment.Exit(1); }
-try { Verbs = File.ReadAllLines(VerbFileName); } catch (FileNotFoundException) { Console.WriteLine($"\nError: File {VerbFileName} does not exist. Ending Program.\n"); Environment.Exit(1); }
+string[] ReadFile(string fileName)
+{
+    string[] arrayName = [];
+    try { arrayName = File.ReadAllLines(fileName); return arrayName; }
+    catch (FileNotFoundException) { Console.WriteLine($"\nError: File {fileName} does not exist. Ending Program.\n"); Environment.Exit(1); return arrayName; }
+}
+
+Adjectives = ReadFile(AdjFileName);
+Nouns = ReadFile(NounFileName);
+PastVerbs = ReadFile(PastVerbFileName);
+IngVerbs = ReadFile(IngVerbFileName);
+Verbs = ReadFile(VerbFileName);
 
 if (PastVerbs.Length == IngVerbs.Length && PastVerbs.Length == Verbs.Length) { Console.Clear(); }
 else { Console.WriteLine("\nVerb files mismatched. Make sure all files are present and correct. Ending Program.\n"); Environment.Exit(1); }
