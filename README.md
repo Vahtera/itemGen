@@ -15,4 +15,4 @@ As of now, there are no arguments or other options for the program.
 >Program has not been tested outside of testing environment.
 
 Screenshot:
-![Screenshot of itemGen](https://imgur.com/KnB0vA0.png)
+![Screenshot of itemGen](https://imgur.com/0c9Aad4.png)
