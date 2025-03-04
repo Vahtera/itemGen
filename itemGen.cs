@@ -4,16 +4,17 @@ using System.IO;
 using System.Linq;
 using libAnnaC;
 
-string ProgramName = "itemGen";
-string ProgramVersion = "0.5.x";
+const string ProgramName = "itemGen";
+const string ProgramVersion = "0.5.x";
+const string libDir = ".\\libAnna\\";
+const string AdjFileName = libDir + "english_adjectives.txt";
+const string VerbFileName = libDir + "english_verbs.txt";
+const string PastVerbFileName = libDir + "english_verbs_past.txt";
+const string IngVerbFileName = libDir + "english_verbs_ing.txt";
+const string NounFileName = libDir + "english_nouns.txt";
+
 string[] ItemTypes = { "sword", "axe", "wand", "shield", "tome", "armor", "ring", "amulet", "bracers", "boots", "sash", "dagger", "bow", "mace", "robe", "cloak" };
 string[] SetTypes = { "Vestments", "Clothes", "Attire", "Apparel", "Rags", "Garb", "Kit", "Outfit", "Trappings", "Instruments", "Gear", "Regalia", "Getup", "Ensemble", "Raiment", "Garments" };
-string libDir = ".\\libAnna\\";
-string AdjFileName = libDir + "english_adjectives.txt";
-string VerbFileName = libDir + "english_verbs.txt";
-string PastVerbFileName = libDir + "english_verbs_past.txt";
-string IngVerbFileName = libDir + "english_verbs_ing.txt";
-string NounFileName = libDir + "english_nouns.txt";
 string[] VerbTypes = { "basic", "past", "ing" };
 string[] Combinations = { "AVN", "V", "AN", "VN", "N", "A", "AV", "PROT" };
 string[] Consonants = { "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z" };
@@ -25,25 +26,26 @@ int CreateCount = 20;
 int VerbIndex = 0;
 Random random = new Random();
 
-string Common = libAnna.WHITE + libAnna.BOLD;
-string Fine = libAnna.BOLD + libAnna.PURPLE;
-string Magical = libAnna.BOLD + libAnna.CYAN;
-string Rare = libAnna.BOLD + libAnna.YELLOW;
-string Legendary = libAnna.YELLOW;
-string Unique = libAnna.BOLD + libAnna.RED;
-string SetItem = libAnna.BOLD + libAnna.GREEN;
+const string Common = libAnna.WHITE + libAnna.BOLD;
+const string Fine = libAnna.BOLD + libAnna.PURPLE;
+const string Magical = libAnna.BOLD + libAnna.CYAN;
+const string Rare = libAnna.BOLD + libAnna.YELLOW;
+const string Legendary = libAnna.YELLOW;
+const string Unique = libAnna.BOLD + libAnna.RED;
+const string SetItem = libAnna.BOLD + libAnna.GREEN;
 string[] Qualities = { Common, Fine, Magical, Rare, Legendary, SetItem, Unique };
+
 string[] Adjectives = [];
 string[] Verbs = [];
 string[] Nouns = [];
 string[] PastVerbs = [];
 string[] IngVerbs = [];
 
-try { Adjectives = File.ReadAllLines(AdjFileName); }catch (FileNotFoundException e) { Console.WriteLine($"\nError: File {AdjFileName} does not exist. Ending Program.\n"); Environment.Exit(1); }
-try { Nouns = File.ReadAllLines(NounFileName); } catch (FileNotFoundException e) { Console.WriteLine($"\nError: File {NounFileName} does not exist. Ending Program.\n"); Environment.Exit(1); }
-try { PastVerbs = File.ReadAllLines(PastVerbFileName); } catch (FileNotFoundException e) { Console.WriteLine($"\nError: File {PastVerbFileName} does not exist. Ending Program.\n"); Environment.Exit(1); }
-try { IngVerbs = File.ReadAllLines(IngVerbFileName); } catch (FileNotFoundException e) { Console.WriteLine($"\nError: File {IngVerbFileName} does not exist. Ending Program.\n"); Environment.Exit(1); }
-try { Verbs = File.ReadAllLines(VerbFileName); } catch (FileNotFoundException e) { Console.WriteLine($"\nError: File {VerbFileName} does not exist. Ending Program.\n"); Environment.Exit(1); }
+try { Adjectives = File.ReadAllLines(AdjFileName); } catch (FileNotFoundException) { Console.WriteLine($"\nError: File {AdjFileName} does not exist. Ending Program.\n"); Environment.Exit(1); }
+try { Nouns = File.ReadAllLines(NounFileName); } catch (FileNotFoundException) { Console.WriteLine($"\nError: File {NounFileName} does not exist. Ending Program.\n"); Environment.Exit(1); }
+try { PastVerbs = File.ReadAllLines(PastVerbFileName); } catch (FileNotFoundException) { Console.WriteLine($"\nError: File {PastVerbFileName} does not exist. Ending Program.\n"); Environment.Exit(1); }
+try { IngVerbs = File.ReadAllLines(IngVerbFileName); } catch (FileNotFoundException) { Console.WriteLine($"\nError: File {IngVerbFileName} does not exist. Ending Program.\n"); Environment.Exit(1); }
+try { Verbs = File.ReadAllLines(VerbFileName); } catch (FileNotFoundException) { Console.WriteLine($"\nError: File {VerbFileName} does not exist. Ending Program.\n"); Environment.Exit(1); }
 
 if (PastVerbs.Length == IngVerbs.Length && PastVerbs.Length == Verbs.Length) { Console.Clear(); }
 else { Console.WriteLine("\nVerb files mismatched. Make sure all files are present and correct. Ending Program.\n"); Environment.Exit(1); }
@@ -51,7 +53,7 @@ else { Console.WriteLine("\nVerb files mismatched. Make sure all files are prese
 Console.WriteLine(ProgramName + " " + ProgramVersion + "\n");
 Console.WriteLine($"Legend:{ Common } Common{ libAnna.ENDC }, { Fine }Fine{ libAnna.ENDC }, { Magical}Magical{libAnna.ENDC}, {Rare}Rare{libAnna.ENDC}, {Legendary}Legendary{libAnna.ENDC}, {Unique}Unique{libAnna.ENDC}, {SetItem}Set{libAnna.ENDC}\n");
 
-void GenerateItems(int row)
+string GenerateItems(int row)
 {
     string ItemType = ItemTypes[random.Next(ItemTypes.Length)];
     string VerbType = VerbTypes[random.Next(VerbTypes.Length)];
@@ -144,11 +146,11 @@ void GenerateItems(int row)
     if (ItemQuality == SetItem) { SetName = $" ({SetType} of {SetTitle})"; if (Combination == "AN" || Combination == "A") { SetName = $" ({SetTitle} {SetType})"; } }
     else { SetName = ""; }
 
-    Console.WriteLine($"{ItemOutput} {libAnna.BOLD}{libAnna.BLUE}{SetName}{libAnna.ENDC}");
+    return $"{ItemOutput} {libAnna.BOLD}{libAnna.BLUE}{SetName}{libAnna.ENDC}";
 }
 
 for (int i = 1; i < CreateCount + 1; i++)
 {
-    GenerateItems(i);
+    Console.WriteLine(GenerateItems(i));
 }
 Console.WriteLine("\n");
