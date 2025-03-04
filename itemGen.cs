@@ -100,9 +100,6 @@ void GenerateItems(int row)
             break;
     }
 
-    //ItemQuality = SetItem; // For testing purposes.
-    //Combination = "PROT"; // For testing purposes.
-
     switch (Combination)
     {
         case "AVN":
@@ -142,7 +139,6 @@ void GenerateItems(int row)
     if (ItemQuality == SetItem) { SetName = $" ({SetType} of {SetTitle})"; if (Combination == "AN" || Combination == "A") { SetName = $" ({SetTitle} {SetType})"; } }
     else { SetName = ""; }
 
-    // Console.WriteLine($"{ItemOutput} {libAnna.BOLD}{libAnna.BLUE}{SetName}{libAnna.ENDC}  -  {Combination}"); // For testing purposes.
     Console.WriteLine($"{ItemOutput} {libAnna.BOLD}{libAnna.BLUE}{SetName}{libAnna.ENDC}");
 }
 
