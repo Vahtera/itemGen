@@ -64,7 +64,6 @@ baring
 batting
 bathing
 battling
-being
 beaming
 bearing
 beating
@@ -896,7 +895,6 @@ staining
 stammering
 stamping
 standing
-staring
 staring
 starting
 starving
