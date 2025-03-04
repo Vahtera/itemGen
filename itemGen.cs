@@ -147,7 +147,7 @@ string GenerateItems(int row)
     {
         case "AVN":
             ItemOutput = CurrentRow + ItemQuality + ItemType.Capitalize() + " of " + Adjective.Capitalize() + " " + FinalVerb.Capitalize() + " " + Noun.Capitalize() + libAnna.ENDC;
-            SetTitle = IngVerb.Capitalize();
+            SetTitle = Adjective.Capitalize() + " " + PluralNoun.Capitalize();
             break;
         case "V":
             ItemOutput = CurrentRow + ItemQuality + ItemType.Capitalize() + " of " + IngVerb.Capitalize() + libAnna.ENDC;
@@ -187,10 +187,21 @@ string GenerateItems(int row)
             break;
     }
 
-    if (ItemQuality == SetItem) { SetName = $" ({SetType} of {SetTitle})"; if (Combination == "AN" || Combination == "A" || Combination == "AV") { SetName = $" ({SetTitle} {SetType})"; } }
-    else { SetName = ""; }
-
-    return $"{ItemOutput} {libAnna.BOLD}{libAnna.BLUE}{SetName}{libAnna.ENDC}";
+    if (ItemQuality == SetItem)
+    {
+        string[] specialCases = { "AN", "A", "AV" };
+        SetName = $" ({SetType} of {SetTitle})";
+        if (specialCases.Any(Combination.Contains))
+        {
+            SetName = $" ({SetTitle} {SetType})";
+        }
+        return $"{ItemOutput} {libAnna.BOLD}{libAnna.BLUE}{SetName}{libAnna.ENDC}";
+    }
+    else
+    {
+        SetName = "";
+        return ItemOutput;
+    }
 }
 
 for (int i = 1; i < CreateCount + 1; i++)
