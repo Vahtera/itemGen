@@ -32,18 +32,22 @@ string Legendary = libAnna.YELLOW;
 string Unique = libAnna.BOLD + libAnna.RED;
 string SetItem = libAnna.BOLD + libAnna.GREEN;
 string[] Qualities = { Common, Fine, Magical, Rare, Legendary, SetItem, Unique };
+string[] Adjectives = [];
+string[] Verbs = [];
+string[] Nouns = [];
+string[] PastVerbs = [];
+string[] IngVerbs = [];
 
-string[] Adjectives = File.ReadAllLines(AdjFileName);
+try { Adjectives = File.ReadAllLines(AdjFileName); }catch (FileNotFoundException e) { Console.WriteLine($"\nError: File {AdjFileName} does not exist. Ending Program.\n"); Environment.Exit(1); }
+try { Nouns = File.ReadAllLines(NounFileName); } catch (FileNotFoundException e) { Console.WriteLine($"\nError: File {NounFileName} does not exist. Ending Program.\n"); Environment.Exit(1); }
+try { PastVerbs = File.ReadAllLines(PastVerbFileName); } catch (FileNotFoundException e) { Console.WriteLine($"\nError: File {PastVerbFileName} does not exist. Ending Program.\n"); Environment.Exit(1); }
+try { IngVerbs = File.ReadAllLines(IngVerbFileName); } catch (FileNotFoundException e) { Console.WriteLine($"\nError: File {IngVerbFileName} does not exist. Ending Program.\n"); Environment.Exit(1); }
+try { Verbs = File.ReadAllLines(VerbFileName); } catch (FileNotFoundException e) { Console.WriteLine($"\nError: File {VerbFileName} does not exist. Ending Program.\n"); Environment.Exit(1); }
 
-string[] Verbs = File.ReadAllLines(VerbFileName);
-string[] Nouns = File.ReadAllLines(NounFileName);
-string[] PastVerbs = File.ReadAllLines(PastVerbFileName);
-string[] IngVerbs = File.ReadAllLines(IngVerbFileName);
-
-if (PastVerbs.Length == IngVerbs.Length && PastVerbs.Length == Verbs.Length) { Console.WriteLine("Verbfiles Match."); }
+if (PastVerbs.Length == IngVerbs.Length && PastVerbs.Length == Verbs.Length) { Console.Clear(); }
 else { Console.WriteLine("Verb files mismatched."); Environment.Exit(1); }
 
-Console.WriteLine("\n" + ProgramName + " " + ProgramVersion + "\n");
+Console.WriteLine(ProgramName + " " + ProgramVersion + "\n");
 Console.WriteLine($"Legend:{ Common } Common{ libAnna.ENDC }, { Fine }Fine{ libAnna.ENDC }, { Magical}Magical{libAnna.ENDC}, {Rare}Rare{libAnna.ENDC}, {Legendary}Legendary{libAnna.ENDC}, {Unique}Unique{libAnna.ENDC}, {SetItem}Set{libAnna.ENDC}\n");
 
 void GenerateItems(int row)
@@ -142,7 +146,7 @@ void GenerateItems(int row)
     Console.WriteLine($"{ItemOutput} {libAnna.BOLD}{libAnna.BLUE}{SetName}{libAnna.ENDC}");
 }
 
-for (int i = 0; i < CreateCount; i++)
+for (int i = 1; i < CreateCount + 1; i++)
 {
     GenerateItems(i);
 }
