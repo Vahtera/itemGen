@@ -63,7 +63,12 @@ string MakePlural(string noun)
             pNoun = noun + "s";
             break;
     }
-    if (noun == "wife") { pNoun = "wives"; } // special case for this word.
+
+    if (noun.Substring(noun.Length - 2, 1) == "f")
+    {
+        pNoun = noun.Substring(0, noun.Length - 2) + "v" + lCharacter + "s";
+    }
+
     return pNoun;
 }
 
