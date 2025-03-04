@@ -12,18 +12,6 @@ const string VerbFileName = libDir + "english_verbs.txt";
 const string PastVerbFileName = libDir + "english_verbs_past.txt";
 const string IngVerbFileName = libDir + "english_verbs_ing.txt";
 const string NounFileName = libDir + "english_nouns.txt";
-
-string[] ItemTypes = { "sword", "axe", "wand", "shield", "tome", "armor", "ring", "amulet", "bracers", "boots", "sash", "dagger", "bow", "mace", "robe", "cloak" };
-string[] SetTypes = { "Vestments", "Clothes", "Attire", "Apparel", "Rags", "Garb", "Kit", "Outfit", "Trappings", "Instruments", "Gear", "Regalia", "Getup", "Ensemble", "Raiment", "Garments" };
-string[] VerbTypes = { "basic", "past", "ing" };
-string[] Combinations = { "AVN", "V", "AN", "VN", "N", "A", "AV", "PROT", "NN", "ANN" };
-
-string SetName = "";
-string SetTitle = "";
-int CreateCount = 20;
-int VerbIndex = 0;
-Random random = new Random();
-
 const string Common = libAnna.WHITE + libAnna.BOLD;
 const string Fine = libAnna.BOLD + libAnna.PURPLE;
 const string Magical = libAnna.BOLD + libAnna.CYAN;
@@ -31,13 +19,23 @@ const string Rare = libAnna.BOLD + libAnna.YELLOW;
 const string Legendary = libAnna.YELLOW;
 const string Unique = libAnna.BOLD + libAnna.RED;
 const string SetItem = libAnna.BOLD + libAnna.GREEN;
-string[] Qualities = { Common, Fine, Magical, Rare, Legendary, SetItem, Unique };
+const int CreateCount = 20;
 
+string[] ItemTypes = { "sword", "axe", "wand", "shield", "tome", "armor", "ring", "amulet", "bracers", "boots", "sash", "dagger", "bow", "mace", "robe", "cloak" };
+string[] SetTypes = { "Vestments", "Clothes", "Attire", "Apparel", "Rags", "Garb", "Kit", "Outfit", "Trappings", "Instruments", "Gear", "Regalia", "Getup", "Ensemble", "Raiment", "Garments" };
+string[] VerbTypes = { "basic", "past", "ing" };
+string[] Combinations = { "AVN", "V", "AN", "VN", "N", "A", "AV", "PROT", "NN", "ANN" };
+string[] Qualities = { Common, Fine, Magical, Rare, Legendary, SetItem, Unique };
 string[] Adjectives = [];
 string[] Verbs = [];
 string[] Nouns = [];
 string[] PastVerbs = [];
 string[] IngVerbs = [];
+
+string SetName = "";
+string SetTitle = "";
+int VerbIndex = 0;
+Random random = new Random();
 
 string MakePlural(string noun)
 {
