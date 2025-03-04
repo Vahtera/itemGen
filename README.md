@@ -1,5 +1,5 @@
 ```
-This program generates a list 20 of random magical items for use in TTRPGs, writing, or just for fun.
+This program generates a list 20 of magical items for use in TTRPGs, writing, or just for fun.
 It functions by reading in lists of english words from five external files.
 (three tenses for verbs, adjectives, and noun.)
 
