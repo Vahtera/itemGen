@@ -5,7 +5,7 @@ using System.Linq;
 using libAnnaC;
 
 const string ProgramName = "itemGen";
-const string ProgramVersion = "0.5.x";
+const string ProgramVersion = "0.6.x";
 const string libDir = ".\\libAnna\\";
 const string AdjFileName = libDir + "english_adjectives.txt";
 const string VerbFileName = libDir + "english_verbs.txt";
@@ -16,10 +16,8 @@ const string NounFileName = libDir + "english_nouns.txt";
 string[] ItemTypes = { "sword", "axe", "wand", "shield", "tome", "armor", "ring", "amulet", "bracers", "boots", "sash", "dagger", "bow", "mace", "robe", "cloak" };
 string[] SetTypes = { "Vestments", "Clothes", "Attire", "Apparel", "Rags", "Garb", "Kit", "Outfit", "Trappings", "Instruments", "Gear", "Regalia", "Getup", "Ensemble", "Raiment", "Garments" };
 string[] VerbTypes = { "basic", "past", "ing" };
-string[] Combinations = { "AVN", "V", "AN", "VN", "N", "A", "AV", "PROT" };
+string[] Combinations = { "AVN", "V", "AN", "VN", "N", "A", "AV", "PROT", "NN", "ANN" };
 
-string FinalVerb = "";
-string PluralNoun = "";
 string SetName = "";
 string SetTitle = "";
 int CreateCount = 20;
@@ -41,12 +39,12 @@ string[] Nouns = [];
 string[] PastVerbs = [];
 string[] IngVerbs = [];
 
-string MakePlural(string lCharacter, string noun)
+string MakePlural(string noun)
 {
+    string lCharacter = noun[noun.Length - 1].ToString();
     string[] Consonants = { "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z" };
     string pNoun = string.Empty;
-    if (string.IsNullOrEmpty(lCharacter)) return noun;
-
+    
     switch (lCharacter)
     {
         case "s":
@@ -67,6 +65,7 @@ string MakePlural(string lCharacter, string noun)
             pNoun = noun + "s";
             break;
     }
+    if (noun == "wife") { pNoun = "wives"; } // special case for this word.
     return pNoun;
 }
 
@@ -104,6 +103,13 @@ string ChooseVerbType(string basic, string ing, string past, string type)
     return result;
 }
 
+string PickRandom(string[] input)
+{
+    string result = string.Empty;
+    result = input[random.Next(input.Length)];
+    return result;
+}
+
 Adjectives = ReadFile(AdjFileName);
 Nouns = ReadFile(NounFileName);
 PastVerbs = ReadFile(PastVerbFileName);
@@ -118,25 +124,26 @@ Console.WriteLine($"Legend:{ Common } Common{libAnna.ENDC}, {Fine}Fine{libAnna.E
 
 string GenerateItems(int row)
 {
-    string ItemType = ItemTypes[random.Next(ItemTypes.Length)];
-    string VerbType = VerbTypes[random.Next(VerbTypes.Length)];
-    string Adjective = Adjectives[random.Next(Adjectives.Length)];
-    string Noun = Nouns[random.Next(Nouns.Length)];
-    string Combination = Combinations[random.Next(Combinations.Length)];
-    string ItemQuality = Qualities[random.Next(Qualities.Length)];
-    string SetType = SetTypes[random.Next(SetTypes.Length)];
+    string ItemType = PickRandom(ItemTypes);
+    string VerbType = PickRandom(VerbTypes);
+    string Adjective = PickRandom(Adjectives);
+    string Noun = PickRandom(Nouns);
+    string Noun2 = PickRandom(Nouns);
+    string Combination = PickRandom(Combinations);
+    string ItemQuality = PickRandom(Qualities);
+    string SetType = PickRandom(SetTypes);
 
     VerbIndex = random.Next(PastVerbs.Length);
    
     string PastVerb = PastVerbs[VerbIndex];
     string IngVerb = IngVerbs[VerbIndex];
     string Verb = Verbs[VerbIndex];
-    string LastChar = Noun[Noun.Length - 1].ToString();
     string CurrentRow = libAnna.BOLD + libAnna.BLACK + String.Format("{0, 2}: ", row.ToString()) + libAnna.ENDC;
     string ItemOutput = "";
 
-    FinalVerb = ChooseVerbType(Verb, IngVerb, PastVerb, VerbType);
-    PluralNoun = MakePlural(LastChar, Noun);
+    string FinalVerb = ChooseVerbType(Verb, IngVerb, PastVerb, VerbType);
+    string PluralNoun = MakePlural(Noun);
+    string PluralNoun2 = MakePlural(Noun2);
 
     switch (Combination)
     {
@@ -166,7 +173,15 @@ string GenerateItems(int row)
             break;
         case "AV":
             ItemOutput = CurrentRow + ItemQuality + ItemType.Capitalize() + " of " + Adjective.Capitalize() + " " + IngVerb.Capitalize() + libAnna.ENDC;
-            SetTitle = Verb.Capitalize();
+            SetTitle = PastVerb.Capitalize();
+            break;
+        case "NN":
+            ItemOutput = CurrentRow + ItemQuality + ItemType.Capitalize() + " of " + Noun.Capitalize() + " " + Noun2.Capitalize() + libAnna.ENDC;
+            SetTitle = PluralNoun.Capitalize();
+            break;
+        case "ANN":
+            ItemOutput = CurrentRow + ItemQuality + ItemType.Capitalize() + " of " + Adjective.Capitalize() + " " + Noun.Capitalize() + " " + Noun2.Capitalize() + libAnna.ENDC;
+            SetTitle = Adjective.Capitalize() + " " + PluralNoun2.Capitalize();
             break;
         case "PROT":
             ItemOutput = CurrentRow + ItemQuality + ItemType.Capitalize() + " of Protection from " + PluralNoun.Capitalize() + libAnna.ENDC;
@@ -174,7 +189,7 @@ string GenerateItems(int row)
             break;
     }
 
-    if (ItemQuality == SetItem) { SetName = $" ({SetType} of {SetTitle})"; if (Combination == "AN" || Combination == "A") { SetName = $" ({SetTitle} {SetType})"; } }
+    if (ItemQuality == SetItem) { SetName = $" ({SetType} of {SetTitle})"; if (Combination == "AN" || Combination == "A" || Combination == "AV") { SetName = $" ({SetTitle} {SetType})"; } }
     else { SetName = ""; }
 
     return $"{ItemOutput} {libAnna.BOLD}{libAnna.BLUE}{SetName}{libAnna.ENDC}";
