@@ -8,11 +8,12 @@ string ProgramName = "itemGen";
 string ProgramVersion = "0.5.x";
 string[] ItemTypes = { "sword", "axe", "wand", "shield", "tome", "armor", "ring", "amulet", "bracers", "boots", "sash", "dagger", "bow", "mace", "robe", "cloak" };
 string[] SetTypes = { "Vestments", "Clothes", "Attire", "Apparel", "Rags", "Garb", "Kit", "Outfit", "Trappings", "Instruments", "Gear", "Regalia", "Getup", "Ensemble", "Raiment", "Garments" };
-string AdjFileName = "english_adjectives.txt";
-string VerbFileName = "english_verbs.txt";
-string PastVerbFileName = "english_verbs_past.txt";
-string IngVerbFileName = "english_verbs_ing.txt";
-string NounFileName = "english_nouns.txt";
+string libDir = ".\\libAnna\\";
+string AdjFileName = libDir + "english_adjectives.txt";
+string VerbFileName = libDir + "english_verbs.txt";
+string PastVerbFileName = libDir + "english_verbs_past.txt";
+string IngVerbFileName = libDir + "english_verbs_ing.txt";
+string NounFileName = libDir + "english_nouns.txt";
 string[] VerbTypes = { "basic", "past", "ing" };
 string[] Combinations = { "AVN", "V", "AN", "VN", "N", "A", "AV", "PROT" };
 string[] Consonants = { "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z" };
@@ -45,7 +46,7 @@ try { IngVerbs = File.ReadAllLines(IngVerbFileName); } catch (FileNotFoundExcept
 try { Verbs = File.ReadAllLines(VerbFileName); } catch (FileNotFoundException e) { Console.WriteLine($"\nError: File {VerbFileName} does not exist. Ending Program.\n"); Environment.Exit(1); }
 
 if (PastVerbs.Length == IngVerbs.Length && PastVerbs.Length == Verbs.Length) { Console.Clear(); }
-else { Console.WriteLine("Verb files mismatched."); Environment.Exit(1); }
+else { Console.WriteLine("\nVerb files mismatched. Make sure all files are present and correct. Ending Program.\n"); Environment.Exit(1); }
 
 Console.WriteLine(ProgramName + " " + ProgramVersion + "\n");
 Console.WriteLine($"Legend:{ Common } Common{ libAnna.ENDC }, { Fine }Fine{ libAnna.ENDC }, { Magical}Magical{libAnna.ENDC}, {Rare}Rare{libAnna.ENDC}, {Legendary}Legendary{libAnna.ENDC}, {Unique}Unique{libAnna.ENDC}, {SetItem}Set{libAnna.ENDC}\n");
