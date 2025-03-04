@@ -17,7 +17,7 @@ string[] ItemTypes = { "sword", "axe", "wand", "shield", "tome", "armor", "ring"
 string[] SetTypes = { "Vestments", "Clothes", "Attire", "Apparel", "Rags", "Garb", "Kit", "Outfit", "Trappings", "Instruments", "Gear", "Regalia", "Getup", "Ensemble", "Raiment", "Garments" };
 string[] VerbTypes = { "basic", "past", "ing" };
 string[] Combinations = { "AVN", "V", "AN", "VN", "N", "A", "AV", "PROT" };
-string[] Consonants = { "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z" };
+
 string FinalVerb = "";
 string PluralNoun = "";
 string SetName = "";
@@ -41,11 +41,67 @@ string[] Nouns = [];
 string[] PastVerbs = [];
 string[] IngVerbs = [];
 
+string MakePlural(string lCharacter, string noun)
+{
+    string[] Consonants = { "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z" };
+    string pNoun = string.Empty;
+    if (string.IsNullOrEmpty(lCharacter)) return noun;
+
+    switch (lCharacter)
+    {
+        case "s":
+            pNoun = noun;
+            break;
+        case "y":
+            if (Consonants.Any(noun.Substring(noun.Length - 2, 1).Contains)) { pNoun = noun.Substring(0, noun.Length - 1) + "ies"; }
+            else { pNoun = noun + "s"; }
+            break;
+        case "f":
+            pNoun = noun.Substring(0, noun.Length - 1) + "ves";
+            break;
+        case "x":
+        case "h":
+            pNoun = noun;
+            break;
+        default:
+            pNoun = noun + "s";
+            break;
+    }
+    return pNoun;
+}
+
 string[] ReadFile(string fileName)
 {
     string[] arrayName = [];
-    try { arrayName = File.ReadAllLines(fileName); return arrayName; }
-    catch (FileNotFoundException) { Console.WriteLine($"\nError: File {fileName} does not exist. Ending Program.\n"); Environment.Exit(1); return arrayName; }
+    try
+    {
+        arrayName = File.ReadAllLines(fileName);
+        return arrayName;
+    }
+    catch (FileNotFoundException)
+    {
+        Console.WriteLine($"\nError: File {fileName} does not exist. Ending Program.\n");
+        Environment.Exit(1);
+        return arrayName;
+    }
+}
+
+string ChooseVerbType(string basic, string ing, string past, string type)
+{
+    string result = string.Empty;
+    switch (type)
+    {
+        case "basic":
+            result = basic;
+            break;
+        case "past":
+            result = past;
+            break;
+        case "ing":
+            result = ing;
+            break;
+    }
+    return result;
 }
 
 Adjectives = ReadFile(AdjFileName);
@@ -58,7 +114,7 @@ if (PastVerbs.Length == IngVerbs.Length && PastVerbs.Length == Verbs.Length) { C
 else { Console.WriteLine("\nVerb files mismatched. Make sure all files are present and correct. Ending Program.\n"); Environment.Exit(1); }
 
 Console.WriteLine(ProgramName + " " + ProgramVersion + "\n");
-Console.WriteLine($"Legend:{ Common } Common{ libAnna.ENDC }, { Fine }Fine{ libAnna.ENDC }, { Magical}Magical{libAnna.ENDC}, {Rare}Rare{libAnna.ENDC}, {Legendary}Legendary{libAnna.ENDC}, {Unique}Unique{libAnna.ENDC}, {SetItem}Set{libAnna.ENDC}\n");
+Console.WriteLine($"Legend:{ Common } Common{libAnna.ENDC}, {Fine}Fine{libAnna.ENDC}, {Magical}Magical{libAnna.ENDC}, {Rare}Rare{libAnna.ENDC}, {Legendary}Legendary{libAnna.ENDC}, {Unique}Unique{libAnna.ENDC}, {SetItem}Set{libAnna.ENDC}\n");
 
 string GenerateItems(int row)
 {
@@ -66,53 +122,21 @@ string GenerateItems(int row)
     string VerbType = VerbTypes[random.Next(VerbTypes.Length)];
     string Adjective = Adjectives[random.Next(Adjectives.Length)];
     string Noun = Nouns[random.Next(Nouns.Length)];
+    string Combination = Combinations[random.Next(Combinations.Length)];
+    string ItemQuality = Qualities[random.Next(Qualities.Length)];
+    string SetType = SetTypes[random.Next(SetTypes.Length)];
 
     VerbIndex = random.Next(PastVerbs.Length);
    
     string PastVerb = PastVerbs[VerbIndex];
     string IngVerb = IngVerbs[VerbIndex];
     string Verb = Verbs[VerbIndex];
-
-    string Combination = Combinations[random.Next(Combinations.Length)];
     string LastChar = Noun[Noun.Length - 1].ToString();
     string CurrentRow = libAnna.BOLD + libAnna.BLACK + String.Format("{0, 2}: ", row.ToString()) + libAnna.ENDC;
-    string ItemQuality = Qualities[random.Next(Qualities.Length)];
-    string SetType = SetTypes[random.Next(SetTypes.Length)];
     string ItemOutput = "";
 
-    switch (LastChar)
-    {
-        case "s":
-            PluralNoun = Noun;
-            break;
-        case "y":
-            if (Consonants.Any(Noun.Substring(Noun.Length - 2, 1).Contains)) { PluralNoun = Noun.Substring(0, Noun.Length - 1) + "ies"; }
-            else { PluralNoun = Noun + "s"; }
-            break;
-        case "f":
-            PluralNoun = Noun.Substring(0, Noun.Length - 1) + "ves";
-            break;
-        case "x":
-        case "h":
-            PluralNoun = Noun;
-            break;
-        default:
-            PluralNoun = Noun + "s";
-            break;
-    }
-
-    switch (VerbType)
-    {
-        case "basic":
-            FinalVerb = Verb;
-            break;
-        case "past":
-            FinalVerb = PastVerb;
-            break;
-        case "ing":
-            FinalVerb = IngVerb;
-            break;
-    }
+    FinalVerb = ChooseVerbType(Verb, IngVerb, PastVerb, VerbType);
+    PluralNoun = MakePlural(LastChar, Noun);
 
     switch (Combination)
     {
