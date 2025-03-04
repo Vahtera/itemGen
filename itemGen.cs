@@ -33,7 +33,7 @@ string[] Nouns = [];
 string[] PastVerbs = [];
 string[] IngVerbs = [];
 
-string ProgramVersion = "0.6." + CommitInfo.CommitCount;
+string ProgramVersion = "0.6 Build " + CommitInfo.CommitCount;
 string SetName = "";
 string SetTitle = "";
 int VerbIndex = 0;
@@ -190,7 +190,7 @@ string GenerateItems(int row)
             break;
         case "PROT":
             ItemOutput = CurrentRow + ItemQuality + ItemType.Capitalize() + " of Protection from " + PluralNoun.Capitalize() + libAnna.ENDC;
-            SetTitle = Noun.Capitalize();
+            SetTitle = "the " + Noun.Capitalize();
             break;
     }
 
