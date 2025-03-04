@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using libAnnaC;
 
+
 const string ProgramName = "itemGen";
 const string ProgramVersion = "0.6.x";
 const string libDir = ".\\libAnna\\";
