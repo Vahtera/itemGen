@@ -32,7 +32,6 @@ string[] Nouns = [];
 string[] PastVerbs = [];
 string[] IngVerbs = [];
 
-
 string SetName = "";
 string SetTitle = "";
 int VerbIndex = 0;
