@@ -25,7 +25,7 @@ const int CreateCount = 20;
 string[] ItemTypes = { "sword", "axe", "wand", "shield", "tome", "armor", "ring", "amulet", "bracers", "boots", "sash", "dagger", "bow", "mace", "robe", "cloak" };
 string[] SetTypes = { "Vestments", "Clothes", "Attire", "Apparel", "Rags", "Garb", "Kit", "Outfit", "Trappings", "Instruments", "Gear", "Regalia", "Getup", "Ensemble", "Raiment", "Garments" };
 string[] VerbTypes = { "basic", "past", "ing" };
-string[] Combinations = { "AVN", "V", "AN", "VN", "N", "ADJ", "AV", "PROT", "NN", "ANN", "SLAY" };
+string[] Combinations = { "AVN", "VERB", "AN", "VN", "N", "ADJ", "AV", "PROT", "NN", "ANN", "SLAY" };
 string[] KillingWord = { "murdering", "killing", "slaying", "slaughtering", "extermination", "beheading", "butchery", "assasination" };
 string[] DownfallWord = { "bane", "undoing", "ruin", "downfall", "destruction", "bane", "end", "ruination", "disgrace", "nemesis" };
 string[] Qualities = { Common, Fine, Magical, Rare, Legendary, SetItem, Unique };
@@ -160,9 +160,9 @@ string GenerateItems(int row)
             ItemOutput = CurrentRow + ItemQuality + ItemType.Capitalize() + " of " + Adjective.Capitalize() + " " + FinalVerb.Capitalize() + " " + Noun.Capitalize() + libAnna.ENDC;
             SetTitle = Adjective.Capitalize() + " " + PluralNoun.Capitalize();
             break;
-        case "V":
+        case "VERB":
             ItemOutput = CurrentRow + ItemQuality + ItemType.Capitalize() + " of " + IngVerb.Capitalize() + libAnna.ENDC;
-            SetTitle = Verb.Capitalize();
+            SetTitle = PastVerb.Capitalize();
             break;
         case "AN":
             ItemOutput = CurrentRow + ItemQuality + ItemType.Capitalize() + " of " + Adjective.Capitalize() + " " + Noun.Capitalize() + libAnna.ENDC;
@@ -204,7 +204,7 @@ string GenerateItems(int row)
 
     if (ItemQuality == SetItem)
     {
-        string[] specialCases = { "AN", "ADJ", "AV" };
+        string[] specialCases = { "AN", "ADJ", "AV", "VERB" };
         SetName = $" ({SetType} of {SetTitle})";
         if (specialCases.Any(Combination.Contains))
         {
