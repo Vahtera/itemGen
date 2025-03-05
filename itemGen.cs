@@ -228,3 +228,5 @@ for (int i = 1; i < CreateCount + 1; i++)
     Console.WriteLine(GenerateItems(i));
 }
 Console.WriteLine("\n");
+Console.WriteLine("Press any key to quit...");
+Console.ReadKey();

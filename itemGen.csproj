@@ -5,7 +5,20 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <ApplicationIcon>itemGen.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="itemGen.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="itemGen.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="itemGen.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Update="english_nouns.txt">
