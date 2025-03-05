@@ -1,4 +1,8 @@
-﻿// Generates random magical items for TTRPGs.
+﻿//
+// itemGen
+// Generates random magical items for TTRPGs.
+// Copyright (c) Anna Vahtera 2025
+//
 
 using System.IO;
 using System.Linq;
@@ -35,7 +39,7 @@ string[] Nouns = [];
 string[] PastVerbs = [];
 string[] IngVerbs = [];
 
-string ProgramVersion = "0.6 Build " + CommitInfo.CommitCount;
+string ProgramVersion = "0.7rc Build " + CommitInfo.CommitCount;
 string SetName = "";
 string SetTitle = "";
 int VerbIndex = 0;
