@@ -25,7 +25,9 @@ const int CreateCount = 20;
 string[] ItemTypes = { "sword", "axe", "wand", "shield", "tome", "armor", "ring", "amulet", "bracers", "boots", "sash", "dagger", "bow", "mace", "robe", "cloak" };
 string[] SetTypes = { "Vestments", "Clothes", "Attire", "Apparel", "Rags", "Garb", "Kit", "Outfit", "Trappings", "Instruments", "Gear", "Regalia", "Getup", "Ensemble", "Raiment", "Garments" };
 string[] VerbTypes = { "basic", "past", "ing" };
-string[] Combinations = { "AVN", "V", "AN", "VN", "N", "A", "AV", "PROT", "NN", "ANN" };
+string[] Combinations = { "AVN", "V", "AN", "VN", "N", "ADJ", "AV", "PROT", "NN", "ANN", "SLAY" };
+string[] KillingWord = { "murdering", "killing", "slaying", "slaughtering", "extermination", "beheading", "butchery", "assasination" };
+string[] DownfallWord = { "bane", "undoing", "ruin", "downfall", "destruction", "bane", "end", "ruination", "disgrace", "nemesis" };
 string[] Qualities = { Common, Fine, Magical, Rare, Legendary, SetItem, Unique };
 string[] Adjectives = [];
 string[] Verbs = [];
@@ -137,6 +139,8 @@ string GenerateItems(int row)
     string Combination = PickRandom(Combinations);
     string ItemQuality = PickRandom(Qualities);
     string SetType = PickRandom(SetTypes);
+    string KillWord = PickRandom(KillingWord);
+    string Downfall = PickRandom(DownfallWord);
 
     VerbIndex = random.Next(PastVerbs.Length);
    
@@ -172,7 +176,7 @@ string GenerateItems(int row)
             ItemOutput = CurrentRow + ItemQuality + ItemType.Capitalize() + " of " + Noun.Capitalize() + libAnna.ENDC;
             SetTitle = PluralNoun.Capitalize();
             break;
-        case "A":
+        case "ADJ":
             ItemOutput = CurrentRow + ItemQuality + Adjective.Capitalize() + " " + ItemType.Capitalize() + libAnna.ENDC;
             SetTitle = Adjective.Capitalize();
             break;
@@ -192,11 +196,15 @@ string GenerateItems(int row)
             ItemOutput = CurrentRow + ItemQuality + ItemType.Capitalize() + " of Protection from " + PluralNoun.Capitalize() + libAnna.ENDC;
             SetTitle = "the " + Noun.Capitalize();
             break;
+        case "SLAY":
+            ItemOutput = CurrentRow + ItemQuality + ItemType.Capitalize() + " of " + Noun.Capitalize() + " " + KillWord.Capitalize() + libAnna.ENDC;
+            SetTitle = Noun.Capitalize() + "'s " + Downfall.Capitalize();
+            break;
     }
 
     if (ItemQuality == SetItem)
     {
-        string[] specialCases = { "AN", "A", "AV" };
+        string[] specialCases = { "AN", "ADJ", "AV" };
         SetName = $" ({SetType} of {SetTitle})";
         if (specialCases.Any(Combination.Contains))
         {
