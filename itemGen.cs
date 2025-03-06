@@ -3,6 +3,18 @@
 // Generates random magical items for TTRPGs.
 // Copyright (c) Anna Vahtera 2025
 //
+// Version History:
+//
+// Version 0.0.1: Initial test release, only five types of combinations. No special cases.
+// Version 0.1.0: Added more combinations, fixed bugs.
+// Version 0.2.0: Added item quality feature
+// Version 0.3.0: Added ANSI colors
+// Version 0.4.0: Moved over to using libAnna and added more verb tenses, set items.
+// Version 0.5.0: Added "Protection from" special case, added named sets for set items.
+// Version 0.6: Feature-complete, beta version. Moved over to Version X.Y Build Z.
+// Version 0.7rc: Release Candidate. Bug fixes. Error handling. Added (temporary) icon, and a pause at the end for running without terminal.
+// Version 1.0.0: First complete release.
+//
 
 using System.IO;
 using System.Linq;
