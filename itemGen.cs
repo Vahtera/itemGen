@@ -51,7 +51,7 @@ string[] Nouns = [];
 string[] PastVerbs = [];
 string[] IngVerbs = [];
 
-string ProgramVersion = "0.7rc Build " + CommitInfo.CommitCount;
+string ProgramVersion = "1.0 Build " + CommitInfo.CommitCount;
 string SetName = "";
 string SetTitle = "";
 int VerbIndex = 0;
